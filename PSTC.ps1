@@ -299,22 +299,22 @@ function Get-File(
 function Calculate-DaysofWeek()
 {
 	$DaysofWeek = @($DaysofWeekCheckbox_Sun, $DaysofWeekCheckbox_Mon, $DaysofWeekCheckbox_Tue, $DaysofWeekCheckbox_Wed, $DaysofWeekCheckbox_Thu, $DaysofWeekCheckbox_Fri, $DaysofWeekCheckbox_Sat)
-	$Value = 1
-	$Total = 0
+	$DaysArray = @("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+	$ChosenDays = @()
 			
 	foreach ($checkbox in $DaysofWeek)
 	{
+
+		$location = $DaysofWeek.IndexOf($checkbox)
 												
 		if ($checkbox.checked)
 		{
-			$Total += $Value				
+			$ChosenDays += $DaysArray[$location]			
 		}
-								
-		$Value = $Value * 2
 										
 	}
 			
-	return $Total
+	return $ChosenDays
 }
 
 function Verifiy-Ready()
@@ -323,27 +323,27 @@ function Verifiy-Ready()
 
 	#Checks if the filepath is valid
 	if (!(Test-Path($TaskActionFilePathSelection_lbl.Text))) {
-		$StatusInfo_lbl.Text = "Filepath to script is invalid, Filepath: $($TaskActionFilePathSelection_lbl.Text)"
+		$StatusInfo_lbl.Text = "[Error] Filepath to script is invalid, Filepath: $($TaskActionFilePathSelection_lbl.Text)"
 		$isReady = $false
 	}
 
 	#Check if weekly is chosen and if there are no days selected
-	if ($TaskScheduleDailyWeekly_Combo.Text -eq "Weekly" -and (Calculate-DaysofWeek) -eq 0)
+	if ($TaskScheduleDailyWeekly_Combo.Text -eq "Weekly" -and (Calculate-DaysofWeek).count -eq 0)
 	{
-		$StatusInfo_lbl.Text = "No Days of the week selected for weekly reoccurence"
+		$StatusInfo_lbl.Text = "[Error] No Days of the week selected for weekly reoccurence"
 		$isReady = $false
 	}
 
 	#Verifiy the date selected is later than the current date
 	if ((Get-CurrentDateTime) -lt (Get-Date))
 	{
-		$StatusInfo_lbl.Text = "Date selection Invalid. Please Select an upcoming date, ChosenDateTime: $(Get-CurrentDateTime) | CurrentDateTime $(Get-Date)"
+		$StatusInfo_lbl.Text = "[Error] Date selection Invalid. Please Select an upcoming date, ChosenDateTime: $(Get-CurrentDateTime) | CurrentDateTime $(Get-Date)"
 		$isReady = $false					
 	}	
 
 	#Check if a Name is present
 	if ($null -eq $TaskName_txtbox.Text -or $TaskName_txtbox.Text -eq "") {
-		$StatusInfo_lbl.Text = "No Name given to Task"
+		$StatusInfo_lbl.Text = "[Error] No Name given to Task"
 		$isReady = $false
 	}
 
