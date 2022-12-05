@@ -406,10 +406,12 @@ function Create_btnClick($object)
 		$taskDesc = $taskName
 	}
 
-	Register-ScheduledTask -TaskName $taskName -Description $taskDesc -Action $taskAction -Trigger $taskTrigger -Principal $taskPrincipal
-
-	if ($?) {
+	try {
+		Register-ScheduledTask -TaskName $taskName -Description $taskDesc -Action $taskAction -Trigger $taskTrigger -Principal $taskPrincipal -ErrorAction Stop
 		$StatusInfo_lbl.Text = "Successfully created task $taskName"
+	}
+	catch {
+		$StatusInfo_lbl.Text = "[Error] $($Error[0].toString())"
 	}
 
 }

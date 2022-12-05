@@ -24,7 +24,7 @@ SourceFiles=SourceFiles
 InstallPrompt=
 DisplayLicense=
 FinishMessage=
-TargetName=C:\Users\gamma\AppData\Roaming\PSTC\PSTC.exe
+TargetName=C:\Users\gamma\Documents\!Projects\PowershellTaskCreator\PSTC.exe
 FriendlyName=PSTC
 AppLaunched=powershell.exe -windowstyle hidden -ExecutionPolicy Bypass -File PSTC.ps1
 PostInstallCmd=<None>
@@ -32,6 +32,6 @@ AdminQuietInstCmd=
 UserQuietInstCmd=
 FILE0="PSTC.ps1"
 [SourceFiles]
-SourceFiles0=C:\Users\gamma\Documents\!Projects\PowershellTaskSchedulerManager\
+SourceFiles0=C:\Users\gamma\Documents\!Projects\PowershellTaskCreator\
 [SourceFiles0]
 %FILE0%=
