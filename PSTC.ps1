@@ -347,6 +347,12 @@ function Verifiy-Ready()
 		$isReady = $false
 	}
 
+	#Check if the a task with that name already exists
+	if ((Get-ScheduledTask | Select -expand TaskName) -contains $TaskName_txtbox.text) {
+		$StatusInfo_lbl.Text = "[Error] A Task with that name already exists"
+		$isReady = $false
+	}
+
 	return $isReady
 }
 
